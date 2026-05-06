@@ -92,7 +92,36 @@ def grid_search(X_train, y_train, X_val, y_val, input_label):
     return best_parameters, best_score, results
     
 
+def parameter_tuning(X_train, y_train, X_val, y_val, input_label):
 
+    print("------Tuning------")
+
+    best_parameters, best_score, results = grid_search(X_train = X_train,
+                                                       y_train = y_train,
+                                                       X_val = X_val,
+                                                       y_val = y_val,
+                                                       input_label = input_label)
+
+
+    print(f"Best Parameters: {best_parameters}")
+    print(f"Best accuracy in validation set: {best_score}")
+
+    return best_parameters, best_score, results
+
+if __name__ == "__main__":
+
+    X_train, X_val, X_test, y_train, y_val, y_test = prepare_data()
+
+    input_label = X_train.shape[1]
+
+    best_parameters, best_score, results = parameter_tuning(X_train = X_train,
+                                                            y_train = y_train,
+                                                            X_val = X_val,
+                                                            y_val = y_val,
+                                                            input_label = input_label)
+
+    
+    print(f"Best Parameters: {best_parameters}, Best score: {best_score}")
 
 
 
