@@ -49,3 +49,40 @@ class NeuralNetwork:
         z_exp = np.exp(z_shift)
 
         return z_exp / np.sum(z_exp,axis = 1, keepdims=True)
+
+    def create_batches(self,X,y):
+
+        # Shuffling to break inherent ordering
+        n_samples = X.shape[0]
+        shuffled_indices = np.random.permutation(n_samples)
+
+        X_s = X[shuffled_indices]
+        y_s = y[shuffled_indices]
+
+        for i in range(0,n_samples,self.batch_size):
+
+            yield X_s[i:i+self.batch_size], y_s[i:i+self.batch_size]
+
+
+    def forward_prop(self,X):
+
+        A_previous = X
+        
+        for i in range(len(self.W)):
+
+            Z = np.dot(A_previous,self.W[i].T) + self.b[i]
+
+            if i == len(self.W) - 1:
+
+                A = self.softmax_activation(Z)
+
+            else:
+
+                A = self.relu_activation(Z)
+
+            A_previous = A
+
+            self.Z_cache[i] = Z
+            self.A_cache[i] = A
+
+        return A
