@@ -31,4 +31,21 @@ class NeuralNetwork:
             self.b.append(b_current_layer)
 
 
-    
+    # ReLU activation function
+    def relu_activation(self,z):
+
+        return np.maximum(0,z)
+
+    # Derivative for computing
+    def relu_derivative(self,z):
+
+        return np.where(z > 0, 1, 0)
+
+    # Softmax activation for output layer
+    def softmax_activation(self,z):
+
+        # To avoid overflow
+        z_shift = z - np.max(z, axis=1, keepdims=True)
+        z_exp = np.exp(z_shift)
+
+        return z_exp / np.sum(z_exp,axis = 1, keepdims=True)
