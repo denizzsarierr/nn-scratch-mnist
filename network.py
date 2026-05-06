@@ -86,3 +86,27 @@ class NeuralNetwork:
             self.A_cache[i] = A
 
         return A
+
+    def backward_prop(self,A,X,y):
+
+        n_samples = X.shape[0]
+
+        dz = A - y
+
+        for i in reversed(range(len(self.W))):
+            
+            A_previous = X if i == 0 else self.A_cache[i-1]
+
+
+            dw = (np.dot(dz.T,A_previous)) / n_samples
+            db = (np.sum(dz,axis = 0,keepdims=True)) / n_samples
+
+            # Set dZ for the next layer
+            if i != 0:
+                
+                Z_previous = self.Z_cache[i-1]
+                dA_previous = np.dot(dz,self.W[i])
+                dz = dA_previous * self.relu_derivative(Z_previous)
+
+            self.W[i] -= self.learning_rate * dw
+            self.b[i] -= self.learning_rate * db
