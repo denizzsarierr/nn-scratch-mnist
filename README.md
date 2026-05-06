@@ -50,6 +50,15 @@ No deep learning frameworks (TensorFlow / PyTorch) were used.
 - Batch Size: 16  
 
 ---
+## What I Learned
+
+- How neural networks work internally (forward & backpropagation)
+- Implementing gradient descent and mini-batch training from scratch
+- Importance of weight initialization (He initialization)
+- Effect of hyperparameters (learning rate, architecture, batch size)
+- Proper train / validation / test splitting to avoid data leakage
+- Saving and reusing trained models for inference
+
 
 ## ⚙️ Usage
 
