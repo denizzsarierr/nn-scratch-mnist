@@ -22,3 +22,25 @@ def prepare_data():
     )
 
     return X_test, y_test
+
+if __name__ == "__main__":
+
+    X_test, y_test = prepare_data()
+
+    input_label = X_test.shape[1]
+
+    network = NeuralNetwork(
+        architecture=[input_label, 256, 128, 10]
+    )
+
+    for i in range(len(network.W)):
+        network.W[i] = np.load(f"model/W{i+1}.npy")
+        network.b[i] = np.load(f"model/b{i+1}.npy")
+
+    prediction = network.predict(X_test)
+
+    y_test_decoded = decode(y_test)
+
+    accuracy = accuracy_score(y_test_decoded, prediction)
+
+    print(f"Loaded Model Accuracy: {accuracy}")
