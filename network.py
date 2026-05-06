@@ -120,3 +120,12 @@ class NeuralNetwork:
                 A = self.forward_prop(X_batch)
 
                 self.backward_prop(A,X_batch,y_batch)
+
+    def predict(self,X):
+
+        A = self.forward_prop(X)
+
+        # Across columns per row
+        prediction = np.argmax(A,axis = 1)
+
+        return prediction
