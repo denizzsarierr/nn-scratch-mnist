@@ -29,6 +29,24 @@ def prepare_data():
 
     return X_train, X_val, X_test, y_train, y_val, y_test
 
+def train(parameters, X_train, y_train, X_val, y_val):
+
+    network = NeuralNetwork(architecture=parameters["architecture"],
+                            n_iters = parameters["n_iters"],
+                            learning_rate = parameters["learning_rate"],
+                            batch_size= parameters["batch_size"])
+
+    start = time.time()
+    network.fit(X_train, y_train)
+    end = time.time()
+
+    prediction = network.predict(X_val)
+
+    y_decoded = decode(y_val)
+
+    accuracy = accuracy_score(y_decoded,prediction)
+
+    return accuracy, end - start
 
 
 
