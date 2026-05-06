@@ -28,6 +28,15 @@ def prepare_data():
     return X_train, X_test, y_train, y_test
 
 
+def save_model(network):
+
+    for i, w in enumerate(network.W):
+        np.save(f"model/W{i+1}.npy", w)
+
+    for i, b in enumerate(network.b):
+        np.save(f"model/b{i+1}.npy", b)
+
+
 if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = prepare_data()
@@ -50,3 +59,5 @@ if __name__ == "__main__":
     accuracy = accuracy_score(y_test_decoded, prediction)
 
     print(f"Final Accuracy: {accuracy}")
+
+    save_model(network)
