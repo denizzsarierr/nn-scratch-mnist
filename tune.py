@@ -49,7 +49,47 @@ def train(parameters, X_train, y_train, X_val, y_val):
     return accuracy, end - start
 
 
+def grid_search(X_train, y_train, X_val, y_val, input_label):
 
+
+    parameters_grid = {"architecture" : [[input_label,64,10],
+                                         [input_label,128,64,10],
+                                         [input_label,256,128,10]],
+                       "n_iters" : [20,30],
+                       "learning_rate" : [0.02,0.01,0.005],
+                       "batch_size" : [16]}
+
+    best_score = 0
+    best_parameters = None
+    results = []
+
+    for epoch in parameters_grid["n_iters"]:
+        for lr in parameters_grid["learning_rate"]:
+            for batch in parameters_grid["batch_size"]:
+                for arch in parameters_grid["architecture"]:
+
+                    parameters = {"architecture": arch,
+                                  "n_iters": epoch,
+                                  "learning_rate": lr,
+                                  "batch_size": batch}
+
+
+                    accuracy, runtime = train(parameters=parameters,
+                                        X_train = X_train,
+                                        y_train = y_train,
+                                        X_val = X_val,
+                                        y_val = y_val)
+
+                    results.append((accuracy,runtime,parameters))
+
+                    print(f"Parameters: {parameters}, Accuracy: {accuracy}, Runtime: {runtime:.2f}")
+
+                    if accuracy > best_score:
+
+                        best_score = accuracy
+                        best_parameters = parameters
+
+    return best_parameters, best_score, results
     
 
 
