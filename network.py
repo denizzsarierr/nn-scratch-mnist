@@ -110,3 +110,13 @@ class NeuralNetwork:
 
             self.W[i] -= self.learning_rate * dw
             self.b[i] -= self.learning_rate * db
+    
+    def fit(self,X,y):
+
+        for _ in range(self.n_iters):
+
+            for X_batch, y_batch in self.create_batches(X,y):
+
+                A = self.forward_prop(X_batch)
+
+                self.backward_prop(A,X_batch,y_batch)
